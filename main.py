@@ -2,8 +2,9 @@ import osmnx as ox
 import networkx as nx
 import matplotlib
 import csv
+from Dijkstra import Dijkstra
 
-if __name__ == '__main__':
+def main():
     G = ox.graph_from_place("Gainesville, Florida, USA", network_type="drive")
     M = ox.utils_graph.get_undirected(G)
 
@@ -78,3 +79,9 @@ if __name__ == '__main__':
         # Write adjacency list with weights data
         for node, neighbors_and_weights in adj_list_with_weights.items():
             writer.writerow({'node_id': node, 'neighbors_with_weights': neighbors_and_weights})
+
+    result_to_visualize = Dijkstra(adj_list_with_weights, 84714023, 2654104462, 9999999999999999)
+
+if __name__ == '__main__':
+    main()
+   
