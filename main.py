@@ -19,19 +19,19 @@ if __name__ == '__main__':
     # find (absolute value) min and max values for x and y coords
     for node, data in nodes(data=True):
         # calculate minimums
-        if abs(data['x']) < x_min:
-            x_min = abs(data['x'])
-        if abs(data['y']) < y_min:
-            y_min = abs(data['y'])
+        if data['x'] + 90 < x_min:
+            x_min = data['x'] + 90
+        if data['y'] + 90 < y_min:
+            y_min = data['y'] + 90
         # calculate maximums
-        if abs(data['x']) > x_max:
-            x_max = abs(data['x'])
-        if abs(data['y']) > y_max:
-            y_max = abs(data['y'])
+        if data['x'] + 90 > x_max:
+            x_max = data['x'] + 90
+        if data['y'] + 90 > y_max:
+            y_max = data['y'] + 90
 
     # calculate x and y coord ranges
-    x_range = abs(x_max) - abs(x_min)
-    y_range = abs(y_max) - abs(y_min)
+    x_range = x_max - x_min
+    y_range = y_max - y_min
 
     viz_scale = max(x_range, y_range)
 
@@ -45,15 +45,10 @@ if __name__ == '__main__':
 
         # Write node data
         for node, data in nodes(data=True):
-            if data['x'] < 0 :
-                new_x = (data['x'] + x_min) / viz_scale
-            else :
-                new_x = (data['x'] - x_min) / viz_scale
-
-            if data['y'] < 0 :
-                new_y = (data['y'] + y_min) / viz_scale
-            else :
-                new_y = (data['y'] - y_min) / viz_scale
+            # normalize x and y
+            new_x = ((data['x'] + 90) - x_min) / viz_scale
+            new_y = ((data['y'] + 90) - y_min) / viz_scale
+            # write data
             writer.writerow({'node_id': node, 'x': new_x, 'y': new_y})
 
     # Initialize an empty dictionary to store the adjacency list with weights
