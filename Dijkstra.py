@@ -20,7 +20,7 @@ def Dijkstra(adj_list: Dict[int, Dict[int, float]], source: int, destination: in
 
     distances[source] = 0.0
 
-    for _ in range(num_of_iterations):
+    for _ in range(num_of_iterations * 100):
         # Find the vertex with the smallest distance in the remaining set
         current_vertex = min(remaining, key=lambda x: distances[x])
 
@@ -37,8 +37,8 @@ def Dijkstra(adj_list: Dict[int, Dict[int, float]], source: int, destination: in
             return path[::-1]
 
         # Update distances and predecessors for neighbors of the current vertex
-        for neighbor, weight in adj_list[current_vertex]:
-            new_distance = distances[current_vertex] + weight
+        for neighbor in adj_list[current_vertex].keys():
+            new_distance = distances[current_vertex] + adj_list[current_vertex][neighbor]
 
             # Check if the new distance is smaller than the current distance
             if new_distance < distances[neighbor]:
