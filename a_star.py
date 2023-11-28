@@ -63,7 +63,8 @@ def astar(adj_list, source, destination, num_iterations):
         # explore neighbors of the current node
         for neighbor, weight in adj_list[current_node].items():
             # calculate tentative g-value
-            tentative_g = g_values[current_node] + weight
+            tentative_g = g_values[current_node] + euclidean_distance(node_coordinates[neighbor], node_coordinates[destination])
+            # tentative_g = g_values[current_node] + weight for Dijkstra
 
             # if the tentative g-value is better, update the information
             if tentative_g < g_values[neighbor]:
