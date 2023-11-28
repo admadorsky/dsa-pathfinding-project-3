@@ -15,7 +15,7 @@ def astar(adj_list, source, destination, num_iterations):
 
     # read node coordinates from nodes.csv
     node_coordinates = {}
-    with open('nodes.csv', newline='') as csvfile:
+    with open(r'C:\Users\admadorsky\Desktop\DSA\Project 3\nodes.csv', newline='') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
             node_id = int(row['node_id'])
