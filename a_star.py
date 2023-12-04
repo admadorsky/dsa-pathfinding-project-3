@@ -43,7 +43,7 @@ def astar(adj_list, source, destination, num_iterations):
 
     iterations = 0
 
-    while open_list and iterations < num_iterations:
+    while open_list and iterations < num_iterations * 150:
         iterations += 1
 
         # pop node with the smallest f-value from open list
@@ -64,7 +64,6 @@ def astar(adj_list, source, destination, num_iterations):
         for neighbor, weight in adj_list[current_node].items():
             # calculate tentative g-value
             tentative_g = g_values[current_node] + euclidean_distance(node_coordinates[neighbor], node_coordinates[destination])
-            # tentative_g = g_values[current_node] + weight for Dijkstra
 
             # if the tentative g-value is better, update the information
             if tentative_g < g_values[neighbor]:

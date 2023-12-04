@@ -7,7 +7,7 @@ from Dijkstra import Dijkstra
 
 
 def main():
-    G = ox.graph_from_place("Rome, Italy", network_type="drive")
+    G = ox.graph_from_place("New York, New York, USA", network_type="drive")
     M = ox.utils_graph.get_undirected(G)
 
     # Extract nodes from the graph

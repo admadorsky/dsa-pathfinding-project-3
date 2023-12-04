@@ -4,7 +4,7 @@ import pathlib
 import math
 from importlib.machinery import SourceFileLoader
 
-dijkstra = SourceFileLoader("Dijkstra", r"C:\Users\admadorsky\Desktop\DSA\Project 3\a_star.py").load_module()
+a_star = SourceFileLoader("a_star", r"C:\Users\admadorsky\Desktop\DSA\Project 3\a_star.py").load_module()
 
 # get csv file location
 file_loc = pathlib.Path(__file__).parent.resolve()
@@ -112,14 +112,15 @@ for edge in edges:
     gp_stroke.points.add(count = 2)
     
 source = 50000
-destination = 55084   
+destination = 55084
     
-# 280
-iterations_to_find = 280
+# 280 for Dijkstra
+# ??? for Astar
+iterations_to_find = 200
 
 for iteration in range(iterations_to_find): 
     
-     # create new grease pencil object
+    # create new grease pencil object
     gpencil_data2 = bpy.data.grease_pencils.new("GPencil")
     gpencil2 = bpy.data.objects.new(gpencil_data2.name, gpencil_data2)
     bpy.context.collection.objects.link(gpencil2)
@@ -137,7 +138,7 @@ for iteration in range(iterations_to_find):
     gpencil2.data.materials.append(progress_mat)
     
     result_distances = {}   
-    result = dijkstra.astar(adj_dict, source, destination, iteration + 1)
+    result = a_star.astar(adj_dict, source, destination, iteration + 1)
 
     max_dist = 0.00001
 
@@ -157,10 +158,10 @@ for iteration in range(iterations_to_find):
             gp_stroke_progress.end_cap_mode = 'ROUND'
             # calculate colors based on distance from source
             gp_stroke_progress.points.add(count = 2)
-            fac = (result_distances[node] / max_dist) ** 2
+            fac = math.sqrt(result_distances[node] / max_dist)
             red = 0.2745 - ((0.2745 - 0.1137) * fac)
-            green = 0.4666 + ((0.7373 - 0.4666) * fac)
-            blue = 0.4823 + ((0.8588 - 0.4823) * fac)
+            green = 0.4666 + ((0.8588 - 0.4666) * fac)
+            blue = 0.4823 + ((0.4862 - 0.4823) * fac)
             # add start and end points
             gp_stroke_progress.points[0].co = (vertices[node][0] - 5.0, 0.0, vertices[node][1] - 5.0)
             gp_stroke_progress.points[0].vertex_color = (red, green, blue, 0.2 + ((1.0 - 0.2) * fac))
@@ -174,6 +175,6 @@ for iteration in range(iterations_to_find):
     gp_stroke_source.end_cap_mode = 'ROUND'
     gp_stroke_source.points.add(count = 1)
     gp_stroke_source.points[0].co = (vertices[source][0] - 5.0, 0.0, vertices[source][1] - 5.0)
-    gp_stroke_source.points[0].vertex_color = (0.1137, 0.7373, 0.8588, 1.0)
+    gp_stroke_source.points[0].vertex_color = (0.1137, 0.8588, 0.4862, 1.0)
     
     gp_frame_finished = gp_layer2.frames.new(iteration + 2)
